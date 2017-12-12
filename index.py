@@ -1,17 +1,39 @@
+import os
 import pymysql
-from bottle import route, run, static_file, request, error, template
+from bottle import route, run, static_file, request, error, template, post
 
-conn = pymysql.connect(host='tsuts.tskoli.is', port=3306, user='2304003260', passwd='mypassword', db='2304003260_todo')
-cur = conn.cursor()
+
+
+@route('/baeta')
+def baeta():
+    return template('baeta')
+
+@route('/buid', method='get')
+def buid():
+    conn = pymysql.connect(host='tsuts.tskoli.is', port=3306, user='2304003260', passwd='mypassword',
+                           db='2304003260_todo')
+    cur = conn.cursor()
+    heiti = request.query.get("heiti")
+    cur.execute("Insert into todo (heiti, stada) values('{}','{:d}')".format(heiti, 0))
+    #cur.execute("INSERT INTO todo (heiti,stada) Values(heiti,0)")
+    conn.commit()
+    cur.close()
+    conn.close()
+    return template('buid', heiti = heiti)
+
 
 @route('/')
-def index():
-
-
-@route('/todo')
-def rot():
+def todo():
+    conn = pymysql.connect(host='tsuts.tskoli.is', port=3306, user='2304003260', passwd='mypassword',
+                           db='2304003260_todo')
+    cur = conn.cursor()
     cur.execute("SELECT * FROM todo")
+    data = cur.fetchall()
+    #conn.close()
 
-    return template('index', cur = cur, conn=conn)
+    return template('index', cur = data)
 
-run(host='localhost', port=8080, debug=True)
+if os.environ.get('Gaman'):
+    run(host='0.0.0.0', port=os.environ.get('PORT'))
+else:
+    run(host='localhost', port=8080, debug=True)
