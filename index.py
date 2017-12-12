@@ -2,8 +2,10 @@ import os
 import pymysql
 from bottle import route, run, static_file, request, error, template, post
 
-
-
+@route('/')
+def baeta():
+    return "Virkar!"
+"""
 @route('/baeta')
 def baeta():
     return template('baeta')
@@ -32,7 +34,7 @@ def todo():
     #conn.close()
 
     return template('index', cur = data)
-
+"""
 if os.environ.get('Gaman'):
     run(host='0.0.0.0', port=os.environ.get('PORT'))
 else:
