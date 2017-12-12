@@ -43,7 +43,7 @@
 		    <td>{{row[2]}}</td>
 		  </tr>
 	% end
-	% conn.close()
+
 	</table>
 </body>
 </html>
