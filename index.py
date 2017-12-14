@@ -13,11 +13,24 @@ def buid():
                            db='2304003260_todo')
     cur = conn.cursor()
     heiti = request.query.get("heiti")
-    cur.execute("Insert into todo (heiti, stada) values('{}','{:d}')".format(heiti, 0))
-    #cur.execute("INSERT INTO todo (heiti,stada) Values(heiti,0)")
-    conn.commit()
-    cur.close()
-    conn.close()
+    val = request.query.get("val")
+    nr = request.query.get("nr")
+    if val == "baeta":
+        cur.execute("Insert into todo (heiti, stada) values('{}','{:d}')".format(heiti, 0))
+        #cur.execute("INSERT INTO todo (heiti,stada) Values(heiti,0)")
+        conn.commit()
+        cur.close()
+        conn.close()
+    elif val == "breyta":
+        cur.execute("Update todo set stada='{}' where heiti='{}'".format(nr, heiti))
+        conn.commit()
+        cur.close()
+        conn.close()
+    else:
+        cur.execute("Delete from todo where heiti = '{}'".format(heiti))
+        conn.commit()
+        cur.close()
+        conn.close()
     return template('buid', heiti = heiti)
 
 
