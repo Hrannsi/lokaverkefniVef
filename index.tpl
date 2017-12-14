@@ -25,6 +25,10 @@
 		    background-color: #4CAF50;
 		    color: white;
 		}
+
+		.breyta {
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
@@ -43,7 +47,11 @@
 		    <td>{{row[2]}}</td>
 		  </tr>
 	% end
+		<td></td>
+		<td class="breyta"><a href="/baeta"><h2>Breyta</h2></a></td>
+		<td></td>
 
 	</table>
 </body>
 </html>
+
